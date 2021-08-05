@@ -14,4 +14,13 @@ class MessageTest < ActiveSupport::TestCase
     @message.content = " "
     assert !@message.valid?
   end
+
+  test "Mentions returns users" do
+    @message = users(:example).messages.build(content:"@example")
+    assert_not_nil @message.mentions
+  end
+
+  test "doesnt return a user when none is mentioned" do
+    assert_empty @message.mentions
+  end
 end
